@@ -55,6 +55,26 @@
       border-radius: 4px;
     }
 
+    .streak-container {
+  position: absolute;
+  top: 40%;
+  left: 100px;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: #fff;
+  background-color: #181616;
+  padding: 12px 20px;
+  border: 8px solid #181616;
+  border-radius: 8px;
+  font-family: 'Impact', sans-serif;
+  user-select: none;
+}
+
+#streak-number {
+  margin-left: 12px;
+  color: #FFD700;
+}
+
     .mascot {
       width: 250px;
       height: auto;
@@ -183,6 +203,11 @@
     >
   </div>
 
+  <div class="streak-container">
+  <span class="streak-label">Current Streak:</span>
+  <span id="streak-number">0</span>
+</div>
+  
   <div class="input-container">
     <input type="text" class="custom-textbox" placeholder="Type something...">
   </div>
