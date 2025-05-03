@@ -226,9 +226,9 @@
 
     // ── State ────────────────────────────────────────────
     let streak = 0;
-    let highScore = parseInt(getCookie('highScore')) || 0;
-    document.getElementById('high-score-text').textContent =
-      `Previous high score: ${highScore}`;
+   let highScore = parseInt(getCookie('Highscore-common-words')) || 0;
+document.getElementById('high-score-text').textContent =
+  `Previous high score: ${highScore}`;
 
     function getRandomQuestion() {
       return questionData[Math.floor(Math.random()*questionData.length)];
@@ -241,59 +241,61 @@
     let currentQuestion = updateQuestion();
 
     // ── Submission logic ─────────────────────────────────
-    function submitAnswer() {
-      const inputEl    = document.getElementById('answer-input');
-      const userAns    = inputEl.value.trim().toLowerCase();
-      const feedbackEl = document.getElementById('feedback');
-      if (!userAns) return;
+  function submitAnswer() {
+  const inputEl    = document.getElementById('answer-input');
+  const userAns    = inputEl.value.trim().toLowerCase();
+  const feedbackEl = document.getElementById('feedback');
 
-      if (userAns === currentQuestion.answer.toLowerCase()) {
-        streak++;
-        feedbackEl.textContent = "";
-      } else {
-        streak = 0;
-        feedbackEl.textContent = 
-          `The correct answer was “${currentQuestion.answer}”`;
-      }
+  if (!userAns) return;
 
-      // update streak & persist
-      document.getElementById('streak-number').textContent = streak;
-      setCookie('streak', streak);
+  if (userAns === currentQuestion.answer.toLowerCase()) {
+    streak++;
+    feedbackEl.textContent = "";
+  } else {
+    streak = 0;
+    feedbackEl.textContent = 
+      `The correct answer was “${currentQuestion.answer}”`;
+  }
 
-      // update highScore & persist if beaten
-      if (streak > highScore) {
-        highScore = streak;
-        setCookie('highScore', highScore);
-        document.getElementById('high-score-text').textContent =
-          `Previous high score: ${highScore}`;
-      }
+  // update streak & persist
+  document.getElementById('streak-number').textContent = streak;
+  setCookie('streak', streak);
 
-      // next question
-      currentQuestion = updateQuestion();
-      inputEl.value = "";
-      inputEl.focus();
+  // update highScore & persist if beaten
+  if (streak > highScore) {
+    highScore = streak;
+    setCookie('Highscore-common-words', highScore);
+    document.getElementById('high-score-text').textContent =
+      `Previous high score: ${highScore}`;
+  }
+
+  // next question
+  currentQuestion = updateQuestion();
+  inputEl.value = "";
+  inputEl.focus();
+}
+
+document.getElementById('submit-btn')
+  .addEventListener('click', submitAnswer);
+
+document.getElementById('answer-input')
+  .addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      submitAnswer();
     }
+  });
 
-    document.getElementById('submit-btn')
-      .addEventListener('click', submitAnswer);
-    document.getElementById('answer-input')
-      .addEventListener('keydown', e => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          submitAnswer();
-        }
-      });
-
-    document.getElementById('exit-btn')
-      .addEventListener('click', () => {
-        const msg = document.getElementById('exit-confirm');
-        if (msg.classList.contains('show')) {
-          window.location.href = 'https://codey.completethe.forum/';
-        } else {
-          msg.classList.add('show');
-          setTimeout(()=> msg.classList.remove('show'),1000);
-        }
-      });
+document.getElementById('exit-btn')
+  .addEventListener('click', () => {
+    const msg = document.getElementById('exit-confirm');
+    if (msg.classList.contains('show')) {
+      window.location.href = 'https://codey.completethe.forum/';
+    } else {
+      msg.classList.add('show');
+      setTimeout(() => msg.classList.remove('show'), 1000);
+    }
+  });
   </script>
 </body>
 </html>
