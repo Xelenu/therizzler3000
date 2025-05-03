@@ -313,29 +313,23 @@
 
     let currentQuestion = updateQuestion();
 
- function submitAnswer() {
+function submitAnswer() {
   const inputEl = document.getElementById('answer-input');
   const userAns = inputEl.value.trim();
 
   if (!userAns) {
-    // do nothing if blank
     return;
   }
 
   if (userAns.toLowerCase() === currentQuestion.answer.toLowerCase()) {
     streak++;
-    document.getElementById('streak-number').textContent = streak;
-
-    // pick a new question only when correct
-    currentQuestion = updateQuestion();
+    currentQuestion = updateQuestion(); // Only update question if correct
   } else {
-    streak = 0; // reset on wrong answer
-    document.getElementById('streak-number').textContent = streak;
-
-    // don't change the question
+    streak = 0;
+    // Do not change the question if wrong
   }
 
-  // clear input and refocus
+  document.getElementById('streak-number').textContent = streak;
   inputEl.value = "";
   inputEl.focus();
 }
