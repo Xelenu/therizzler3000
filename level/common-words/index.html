@@ -101,23 +101,55 @@
     }
 
     .custom-textbox {
-      background-color: #4D4848;
-      color: #BDBBBB;
-      border: 1px solid #BDBBBB;
-      padding: 10px;
-      font-size: 30px;
-      border-radius: 5px;
-      outline: none;
-      width: 100%;
-      box-sizing: border-box;
-      resize: vertical;
-    }
+  background-color: #4D4848;
+  color: #BDBBBB;
+  border: 1px solid #BDBBBB;
+  padding: 10px;
+  font-size: 30px;
+  border-radius: 5px;
+  outline: none;
+  width: 100%; /* Change this line */
+  box-sizing: border-box;
+  resize: vertical;
+  flex: 1; /* Add this line to make it share space with the button */
+}
 
     .custom-textbox::placeholder {
       color: #BDBBBB;
       opacity: 0.6;
     }
 
+    .input-with-button {
+  display: flex;
+  gap: 1px;
+  align-items: center;
+}
+
+/* Override the large min-width + padding from .button */
+.intensity-btn {
+  padding: 5px 10px;         /* Small internal space */
+  font-size: 24px;           /* Matches your design scale */
+  min-width: auto;           /* Overrides .button's min-width */
+  width: auto;               /* No forced width */
+  height: auto;              /* Adjusts height to fit the content */
+  background-color: #444;    /* Matches the theme color */
+  color: white;              /* Text color for contrast */
+  border: 2px solid #666;    /* Border similar to the button theme */
+  border-radius: 8px;        /* Matches the button's rounded corners */
+  cursor: pointer;          /* Shows a pointer on hover */
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
+  white-space: nowrap;       /* Prevents the text from breaking */
+}
+
+.intensity-btn:hover {
+  background-color: #555;    /* Slightly brighter when hovering */
+  transform: translateY(-2px); /* A little lift on hover */
+  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.1); /* Subtle shadow effect */
+}
+
+.intensity-btn:focus {
+  outline: 3px solid #fff;   /* Outline effect when focused */
+}
     /* EXIT BUTTON + CONFIRMATION MESSAGE */
     .exit-container {
       position: fixed;
@@ -208,9 +240,21 @@
   <span id="streak-number">0</span>
 </div>
   
-  <div class="input-container">
-    <input type="text" class="custom-textbox" placeholder="Type something...">
+<!-- your existing input-container -->
+<div class="input-container">
+  <div class="input-with-button">
+    <input
+      type="text"
+      class="custom-textbox"
+      placeholder="Type something..."
+    >
+    <!-- now the ✓ button will auto-size -->
+    <button
+      class="intensity-btn"
+      onclick="window.location.href='https://codey.completethe.forum/info/'"
+    >✅</button>
   </div>
+</div>
 
   <div class="exit-container">
     <div id="exit-confirm">Exit?</div>
