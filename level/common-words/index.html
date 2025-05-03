@@ -12,6 +12,33 @@
       color: white;
     }
 
+    /* Warning banner */
+.warning-box {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #8B0000;       /* dark red */
+  border: 2px solid #A52A2A;       /* slightly brighter red */
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Impact', sans-serif;
+  font-size: 1rem;
+  z-index: 1000;
+  width: calc(100% - 40px);
+  max-width: 800px;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+/* Warning icon style */
+.warning-icon {
+  font-size: 1.5rem; /* adjust size as needed */
+}
+
     .bottom-bar {
       position: fixed;
       bottom: 0;
@@ -220,9 +247,15 @@
       draggable="false"
     >
 
+    <div class="warning-box">
+  <span class="warning-icon">⚠️</span>
+  <span class="warning-text">
+    Your score does not save right now, the developer of “Codey” is trying to fix this, sorry for the inconvenience!
+  </span>
+</div>
+
     <div class="center-group">
       <div class="regular-text">What is this in Chesao:</div>
-      <div class="regular-text"></div>
       <div id="question-display" class="regular-text"></div>
     </div>
   </div>
