@@ -37,6 +37,15 @@
   font-size: 1.5rem;
 }
 
+.feedback-text {
+  color: #FEFEFE;
+  font-size: 1rem;
+  margin-bottom: 10px;          
+  text-shadow: 0 0 5px #F80202; 
+  height: 1.2em;               
+  overflow: hidden; 
+}
+
     .bottom-bar {
       position: fixed;
       bottom: 0;
@@ -253,10 +262,10 @@
 </div>
 
     <div class="center-group">
-      <div class="regular-text">What is this in Chesao:</div>
-      <div id="question-display" class="regular-text"></div>
-    </div>
-  </div>
+  <div id="feedback" class="feedback-text"></div>
+  <div class="regular-text">What is this in Chesao:</div>
+  <div id="question-display" class="regular-text"></div>
+</div>
 
   <div class="streak-container">
     <span class="streak-label">Score:</span>
@@ -314,22 +323,28 @@
     let currentQuestion = updateQuestion();
 
 function submitAnswer() {
-  const inputEl = document.getElementById('answer-input');
-  const userAns = inputEl.value.trim();
+  const inputEl     = document.getElementById('answer-input');
+  const userAns     = inputEl.value.trim();
+  const feedbackEl  = document.getElementById('feedback');
 
-  if (!userAns) {
-    return;
-  }
+  if (!userAns) return;
 
+  // Check if answer is correct
   if (userAns.toLowerCase() === currentQuestion.answer.toLowerCase()) {
     streak++;
-    currentQuestion = updateQuestion(); // Only update question if correct
+    feedbackEl.textContent = ""; // Clear any previous message
   } else {
     streak = 0;
-    // Do not change the question if wrong
+    feedbackEl.textContent = `The correct answer was “${currentQuestion.answer}”`;
   }
 
+  // Update streak display
   document.getElementById('streak-number').textContent = streak;
+
+  // Move to the next question
+  currentQuestion = updateQuestion();
+
+  // Reset input
   inputEl.value = "";
   inputEl.focus();
 }
