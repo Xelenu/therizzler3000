@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>‎ </title>
+  <title>‎</title>
   <style>
     body {
       margin: 0;
@@ -31,7 +31,9 @@
       box-sizing: border-box;
       border-radius: 4px;
     }
-    .warning-icon { font-size: 1.5rem; }
+    .warning-icon {
+      font-size: 1.5rem;
+    }
 
     .feedback-text {
       color: #FEFEFE;
@@ -43,22 +45,29 @@
     }
 
     .main-bar {
-      position: fixed; top: 0; left: 0;
+      position: fixed;
+      top: 0; left: 0;
       width: 100%; height: 100vh;
       background-color: #242121;
       overflow-y: auto;
       padding: 30px;
+      box-sizing: border-box;
       display: flex;
       justify-content: center;
       align-items: center;
       scrollbar-color: #444 #000;
       scrollbar-width: thin;
     }
-    .main-bar::-webkit-scrollbar { width: 8px; background-color: #000; }
-    .main-bar::-webkit-scrollbar-thumb { background-color: #444; border-radius: 4px; }
+    .main-bar::-webkit-scrollbar {
+      width: 8px; background-color: #000;
+    }
+    .main-bar::-webkit-scrollbar-thumb {
+      background-color: #444; border-radius: 4px;
+    }
 
     .streak-container {
-      position: absolute; top: 40%; left: 20px;
+      position: absolute;
+      top: 40%; left: 20px;
       transform: translateY(-50%);
       background-color: #181616;
       padding: 12px 20px;
@@ -67,12 +76,23 @@
       font-size: 3rem;
       user-select: none;
     }
-    #streak-number { margin-left: 12px; color: #FFD700; }
-    .small-text {
+    .streak-container .streak-label {
+      white-space: nowrap;
+    }
+    #streak-number {
+      margin-left: 12px;
+      color: #FFD700;
+    }
+
+    /* High score line */
+    #high-score-text {
       font-size: 1rem;
       color: #aaa;
       margin-top: 8px;
       white-space: nowrap;
+    }
+    #high-score-number {
+      color: #FFD700;  /* Gold color */
     }
 
     .mascot {
@@ -99,8 +119,11 @@
       outline: none;
       width: 100%;
       box-sizing: border-box;
+      resize: vertical;
     }
-    .input-with-button { display: flex; gap: 1px; align-items: center; }
+    .input-with-button {
+      display: flex; gap: 1px; align-items: center;
+    }
     .intensity-btn {
       padding: 5px 10px; font-size: 24px;
       background-color: #444; color: white;
@@ -112,23 +135,28 @@
       background-color: #555; transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(255,255,255,0.1);
     }
-    .intensity-btn:focus { outline: 3px solid #fff; }
+    .intensity-btn:focus {
+      outline: 3px solid #fff;
+    }
 
     .exit-container {
-      position: fixed; bottom: 17.5px; left: 20px; pointer-events: none;
+      position: fixed; bottom: 17.5px; left: 20px;
+      pointer-events: none;
     }
     #exit-btn {
-      width: 40px; height: auto; cursor: pointer; pointer-events: auto;
+      width: 40px; height: auto; cursor: pointer;
+      pointer-events: auto;
     }
     #exit-confirm {
       position: absolute; bottom: 100%; left: 50%;
       transform: translateX(-50%); margin-bottom: 8px;
-      padding: 6px 12px;
-      background-color: #333; color: #fff;
-      font-size: 14px; border-radius: 4px;
+      padding: 6px 12px; background-color: #333;
+      color: #fff; font-size: 14px; border-radius: 4px;
       opacity: 0; transition: opacity 0.1s;
     }
-    #exit-confirm.show { opacity: 1; }
+    #exit-confirm.show {
+      opacity: 1;
+    }
 
     .regular-text {
       font-size: 2rem;
@@ -167,8 +195,8 @@
   <div class="streak-container">
     <span class="streak-label">Score:</span>
     <span id="streak-number">0</span>
-    <div id="high-score-text" class="small-text">
-      Previous high score: 0
+    <div id="high-score-text">
+      High score: <span id="high-score-number">0</span>
     </div>
   </div>
 
@@ -177,8 +205,8 @@
       <input
         type="text"
         class="custom-textbox"
-        id="answer-input"
         placeholder="Type something..."
+        id="answer-input"
         autocomplete="off"
       >
       <button class="intensity-btn" id="submit-btn">✅</button>
@@ -196,11 +224,11 @@
   </div>
 
   <script>
-    // ── Cookie helpers ─────────────────────────────────────
+    // — Cookie helpers —
     function setCookie(name, value) {
       const expires = new Date('2124-01-01').toUTCString();
-      // SameSite=None and Secure are required for iframes on HTTPS
-      document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=None; Secure`;
+      document.cookie = 
+        `${name}=${value}; expires=${expires}; path=/; SameSite=None; Secure`;
     }
     function getCookie(name) {
       return document.cookie
@@ -210,28 +238,29 @@
         ?.split('=')[1] || null;
     }
 
-    // ── Questions data ────────────────────────────────────
+    // — Questions data —
     const questionData = [
-      { id:1, text:"hello", answer:"mito" },
-      { id:2, text:"you",   answer:"whu"  },
-      { id:3, text:"i",     answer:"e"    },
-      { id:4, text:"this",  answer:"ke"   },
-      { id:5, text:"that",  answer:"tu"   },
-      { id:6, text:"is",    answer:"ah"   },
-      { id:7, text:"a",     answer:"zy"   },
-      { id:8, text:"the",   answer:"dapu" },
-      { id:9, text:"it",    answer:"oh"   }
-      // … more …
+      { id:1, text:"hello",   answer:"mito"  },
+      { id:2, text:"you",     answer:"whu"   },
+      { id:3, text:"i",       answer:"e"     },
+      { id:4, text:"this",    answer:"ke"    },
+      { id:5, text:"that",    answer:"tu"    },
+      { id:6, text:"is",      answer:"ah"    },
+      { id:7, text:"a",       answer:"zy"    },
+      { id:8, text:"the",     answer:"dapu"  },
+      { id:9, text:"it",      answer:"oh"    }
+      // …add more…
     ];
 
-    // ── State ────────────────────────────────────────────
+    // — State initialization —
     let streak = 0;
-   let highScore = parseInt(getCookie('Highscore-common-words')) || 0;
-document.getElementById('high-score-text').textContent =
-  `Previous high score: ${highScore}`;
+    let highScore = parseInt(getCookie('Highscore-common-words')) || 0;
+    document.getElementById('high-score-number').textContent = highScore;
 
     function getRandomQuestion() {
-      return questionData[Math.floor(Math.random()*questionData.length)];
+      return questionData[
+        Math.floor(Math.random()*questionData.length)
+      ];
     }
     function updateQuestion() {
       const q = getRandomQuestion();
@@ -240,61 +269,57 @@ document.getElementById('high-score-text').textContent =
     }
     let currentQuestion = updateQuestion();
 
-    // ── Submission logic ─────────────────────────────────
-  function submitAnswer() {
-  const inputEl    = document.getElementById('answer-input');
-  const userAns    = inputEl.value.trim().toLowerCase();
-  const feedbackEl = document.getElementById('feedback');
+    // — Submission logic —
+    function submitAnswer() {
+      const inputEl    = document.getElementById('answer-input');
+      const userAns    = inputEl.value.trim().toLowerCase();
+      const feedbackEl = document.getElementById('feedback');
+      if (!userAns) return;
 
-  if (!userAns) return;
+      if (userAns === currentQuestion.answer.toLowerCase()) {
+        streak++;
+        feedbackEl.textContent = "";
+      } else {
+        streak = 0;
+        feedbackEl.textContent =
+          `The correct answer was “${currentQuestion.answer}”`;
+      }
 
-  if (userAns === currentQuestion.answer.toLowerCase()) {
-    streak++;
-    feedbackEl.textContent = "";
-  } else {
-    streak = 0;
-    feedbackEl.textContent = 
-      `The correct answer was “${currentQuestion.answer}”`;
-  }
+      // update streak display
+      document.getElementById('streak-number').textContent = streak;
 
-  // update streak display
-  document.getElementById('streak-number').textContent = streak;
+      // persist high score if beaten
+      if (streak > highScore) {
+        highScore = streak;
+        setCookie('Highscore-common-words', highScore);
+        document.getElementById('high-score-number').textContent = highScore;
+      }
 
-  // update highScore & persist if beaten
-  if (streak > highScore) {
-    highScore = streak;
-    setCookie('Highscore-common-words', highScore);
-    document.getElementById('high-score-text').textContent =
-      `Previous high score: ${highScore}`;
-  }
-
-  // next question
-  currentQuestion = updateQuestion();
-  inputEl.value = "";
-  inputEl.focus();
-}
-
-document.getElementById('submit-btn')
-  .addEventListener('click', submitAnswer);
-
-document.getElementById('answer-input')
-  .addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      submitAnswer();
+      // next question
+      currentQuestion = updateQuestion();
+      inputEl.value = "";
+      inputEl.focus();
     }
-  });
 
-document.getElementById('exit-btn')
-  .addEventListener('click', () => {
-    const msg = document.getElementById('exit-confirm');
-    if (msg.classList.contains('show')) {
-      window.location.href = 'https://codey.completethe.forum/';
-    } else {
-      msg.classList.add('show');
-      setTimeout(() => msg.classList.remove('show'), 1000);
-    }
-  });
+    document.getElementById('submit-btn')
+      .addEventListener('click', submitAnswer);
+    document.getElementById('answer-input')
+      .addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          submitAnswer();
+        }
+      });
+    document.getElementById('exit-btn')
+      .addEventListener('click', () => {
+        const msg = document.getElementById('exit-confirm');
+        if (msg.classList.contains('show')) {
+          window.location.href = 'https://codey.completethe.forum/';
+        } else {
+          msg.classList.add('show');
+          setTimeout(()=> msg.classList.remove('show'),1000);
+        }
+      });
   </script>
 </body>
 </html>
