@@ -312,38 +312,41 @@
 
     let currentQuestion = updateQuestion();
 
-    function submitAnswer() {
-      const inputEl = document.getElementById('answer-input');
-      const userAns = inputEl.value.trim();
+ function submitAnswer() {
+  const inputEl = document.getElementById('answer-input');
+  const userAns = inputEl.value.trim();
 
-      if (!userAns) {
-        // do nothing if blank
-        return;
-      }
+  if (!userAns) {
+    // do nothing if blank
+    return;
+  }
 
-      if (userAns.toLowerCase() === currentQuestion.answer.toLowerCase()) {
-        streak++;
-      } else {
-        streak = 0; // reset on wrong answer
-      }
+  if (userAns.toLowerCase() === currentQuestion.answer.toLowerCase()) {
+    streak++;
+    document.getElementById('streak-number').textContent = streak;
 
-      // update display
-      document.getElementById('streak-number').textContent = streak;
+    // pick a new question only when correct
+    currentQuestion = updateQuestion();
+  } else {
+    streak = 0; // reset on wrong answer
+    document.getElementById('streak-number').textContent = streak;
 
-      // prepare next round
-      inputEl.value = "";
-      currentQuestion = updateQuestion();
-      inputEl.focus();
-    }
+    // don't change the question
+  }
 
-    document.getElementById('submit-btn').addEventListener('click', submitAnswer);
+  // clear input and refocus
+  inputEl.value = "";
+  inputEl.focus();
+}
 
-    document.getElementById('answer-input').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        submitAnswer();
-      }
-    });
+document.getElementById('submit-btn').addEventListener('click', submitAnswer);
+
+document.getElementById('answer-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    submitAnswer();
+  }
+});
 
     document.getElementById('exit-btn').addEventListener('click', () => {
       const msg = document.getElementById('exit-confirm');
