@@ -189,7 +189,7 @@
     <button class="button" onclick="window.location.href='https://codey.completethe.forum/info/'">Intensity</button>
     <button class="button2" onclick="window.location.href='https://codey.completethe.forum/credits/'">Credits</button>
   </div>
-  <script>
+ <script>
   function getCookie(name) {
     return document.cookie.split('; ').reduce((r, v) => {
       const parts = v.split('=');
@@ -198,13 +198,13 @@
   }
 
   function getColorForStreak(streak) {
-    if (streak >= 300) return '#ff3333';   // Red
-    if (streak >= 200) return '#ff8800';   // Orange
-    if (streak >= 100) return '#ffff00';   // Yellow
-    if (streak >= 50)  return '#00ccff';   // Electric Blue
-    if (streak >= 1)   return '#479329';   // Green
-    return '#ffffff';                      // Default White (for 0)
-  }
+  if (streak >= 300) return '#ff3333';   // Red
+  if (streak >= 200) return '#ff8800';   // Orange
+  if (streak >= 100) return '#ffff00';   // Yellow
+  if (streak >= 50)  return '#00ccff';   // Electric Blue
+  if (streak >= 1)   return '#00ff66';   // Greenish Cyan (was #00ffcc)
+  return '#ffffff';                      // Default White
+}
 
   let commonWords = parseInt(getCookie("Highscore-common-words") || 0);
   let commonSentences = parseInt(getCookie("Highscore-common-sentences") || 0);
@@ -214,9 +214,9 @@
 
   if (maxStreak > 0) {
     const color = getColorForStreak(maxStreak);
-    streakElement.innerHTML = `All time streak: <strong style="color: ${color}; font-weight: 900;">${maxStreak}</strong>`;
+    streakElement.innerHTML = `All time streak: <strong style="color: ${color}; font-weight: 900; font-size: clamp(24px, 3vw, 40px);">${maxStreak}</strong>`;
   } else {
-    streakElement.textContent = `All time streak: 0`;
+    streakElement.innerHTML = `<span style="font-size: clamp(24px, 3vw, 40px);">All time streak: 0</span>`;
   }
 </script>
 </body>
