@@ -197,15 +197,19 @@
     }, null);
   }
 
-  // Get both high scores
+  // Get scores
   let commonWords = parseInt(getCookie("Highscore-common-words") || 0);
   let commonSentences = parseInt(getCookie("Highscore-common-sentences") || 0);
-
-  // Compare and get the max
   let maxStreak = Math.max(commonWords, commonSentences);
 
-  // Update the UI
-  document.querySelector(".bottom-left-text").textContent = `All time streak: ${maxStreak}`;
+  // Build the display element
+  const streakElement = document.querySelector(".bottom-left-text");
+
+  if (maxStreak > 0) {
+    streakElement.innerHTML = `All time streak: <strong style="color: #00ffcc; font-weight: 900;">${maxStreak}</strong>`;
+  } else {
+    streakElement.textContent = `All time streak: 0`;
+  }
 </script>
 </body>
 </html>
