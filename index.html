@@ -189,5 +189,23 @@
     <button class="button" onclick="window.location.href='https://codey.completethe.forum/info/'">Intensity</button>
     <button class="button2" onclick="window.location.href='https://codey.completethe.forum/credits/'">Credits</button>
   </div>
+  <script>
+  function getCookie(name) {
+    return document.cookie.split('; ').reduce((r, v) => {
+      const parts = v.split('=');
+      return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+    }, null);
+  }
+
+  // Get both high scores
+  let commonWords = parseInt(getCookie("Highscore-common-words") || 0);
+  let commonSentences = parseInt(getCookie("Highscore-common-sentences") || 0);
+
+  // Compare and get the max
+  let maxStreak = Math.max(commonWords, commonSentences);
+
+  // Update the UI
+  document.querySelector(".bottom-left-text").textContent = `All time streak: ${maxStreak}`;
+</script>
 </body>
 </html>
